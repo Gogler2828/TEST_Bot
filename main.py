@@ -3,7 +3,7 @@ import random
 import requests
 import json
 
-with open ("tokens/main_token.txt") as tkn:
+with open ("token/main_token.txt") as tkn:
     TOKEN = tkn.read() #トークンを文字列として読み込み
 
     #接続に必要なオブジェクト生成
@@ -32,8 +32,8 @@ with open ("tokens/main_token.txt") as tkn:
             await message.channel.send(f"{message.author.mention}")
             await message.channel.send(":ng:")
         elif message.content.find("sexy") != -1:
-                await message.channel.send(f"{message.author.mention}")
-                await message.channel.send(":pornhub:")
+                emoji = client.get_emoji(751817150834016297)
+                await message.add_reaction(emoji) # :pornhub:リアクションを追加
         elif message.content == ("/happy"):
                 await message.channel.send(f"{message.author.mention},(便乗)")
         elif message.content.find("/") != -1:
