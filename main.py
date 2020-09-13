@@ -3,7 +3,7 @@ import random
 import requests
 import json
 
-with open ("token/main_token.txt") as tkn:
+with open ("token/token.txt") as tkn:
     TOKEN = tkn.read() #トークンを文字列として読み込み
 
     #接続に必要なオブジェクト生成
