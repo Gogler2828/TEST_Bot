@@ -9,7 +9,6 @@ import json
 #with open ("token/token.txt") as tkn:
 #    TOKEN = tkn.read() #トークンを文字列として読み込み
 
-bot = commands.Bot(command_prefix='/')
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 #接続に必要なオブジェクト生成
