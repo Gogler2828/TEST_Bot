@@ -1,21 +1,18 @@
-from discord.ext import commands
-import os
-import traceback
 import discord
 import random
 import requests
 import json
 
-#with open ("token/token.txt") as tkn:
-#    TOKEN = tkn.read() #トークンを文字列として読み込み
-
-TOKEN = os.environ['DISCORD_BOT_TOKEN']
+with open ("token/token.txt") as tkn:
+    TOKEN = tkn.read() #トークンを文字列として読み込み
 
 #接続に必要なオブジェクト生成
 client = discord.Client()
+
 @client.event
 async def on_ready():
     print("TESTログイン")
+
 @client.event
 async def on_message(message):
     cnt = 0
