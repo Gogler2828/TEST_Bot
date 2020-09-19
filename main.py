@@ -3,8 +3,8 @@ import random
 import requests
 import json
 
-with open ("token/token.txt") as tkn:
-    TOKEN = tkn.read() #トークンを文字列として読み込み
+with open ("token.txt") as tkn:
+    token = tkn.read() #トークンを文字列として読み込み
 
 #接続に必要なオブジェクト生成
 client = discord.Client()
@@ -20,24 +20,33 @@ async def on_message(message):
         if message.author.bot:
             return
         await message.channel.send(f"{message.author.mention},ワンワンッ！！お呼びですか〜？")
+    
     elif (message.content == ("UUUM")) or (message.content == ("thinking")):
         await message.delete()
         await message.channel.send(f"{message.author.mention}")
         await message.channel.send(":thinking:")
+    
     elif message.content.find("NG") != -1:
         if (message.content.find("ING") != -1) or (message.content.find("NGO") != -1):
             return
+    
         elif message.content == ("NG"):
             await message.delete()
         await message.channel.send(f"{message.author.mention}")
         await message.channel.send(":ng:")
+    
     elif message.content.find("sexy") != -1:
             emoji = client.get_emoji(751817150834016297)
             await message.add_reaction(emoji) # :pornhub:リアクションを追加
+    
     elif message.content == ("/happy"):
             await message.channel.send(f"{message.author.mention},(便乗)")
+    
     elif message.content.find("/") != -1:
         if message.author.bot:
+            return
+
+        elif message.content.find("/") >= 2:
             return
         
         elif message.content == ("/"):
@@ -85,4 +94,4 @@ async def on_message(message):
         else :
             await message.channel.send("```Unknown command```")
 
-client.run(TOKEN)
+client.run(token)
