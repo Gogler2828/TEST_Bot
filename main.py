@@ -1,11 +1,17 @@
+from discord.ext import commands
+import os
+import traceback
+
 import datetime
 import discord
 import json
 import random
 import requests
 
-with open ("token.txt") as tkn:
-    token = tkn.read() #トークンを文字列として読み込み
+#with open ("token.txt") as tkn:
+#    token = tkn.read() #トークンを文字列として読み込み
+
+token = os.environ['DISCORD_BOT_TOKEN'] #Config Barに書き込んだトークン読んでもらう
 
 #接続に必要なオブジェクト生成
 client = discord.Client()
