@@ -1,7 +1,8 @@
+import datetime
 import discord
+import json
 import random
 import requests
-import json
 
 with open ("token.txt") as tkn:
     token = tkn.read() #トークンを文字列として読み込み
@@ -23,7 +24,6 @@ async def on_message(message):
     
     elif (message.content == ("UUUM")) or (message.content == ("thinking")):
         await message.delete()
-        await message.channel.send(f"{message.author.mention}")
         await message.channel.send(":thinking:")
     
     elif message.content.find("NG") != -1:
@@ -32,7 +32,6 @@ async def on_message(message):
     
         elif message.content == ("NG"):
             await message.delete()
-        await message.channel.send(f"{message.author.mention}")
         await message.channel.send(":ng:")
     
     elif message.content.find("sexy") != -1:
@@ -51,7 +50,7 @@ async def on_message(message):
             return
         
         elif message.content == ("/list"):
-            await message.channel.send("```happy:使うと幸せになれるコマンドです。 \ncat:猫の鳴き声であなたを癒やします。\ndango:特に意味はないです。\nget:様々な値を取得します。```")
+            await message.channel.send("```cat:弊鯖内の猫系Botを呼び出すコマンドです。\ndango:特に意味はないです。\nget:様々な値を取得します。\nhappy:使用が推奨されていないコマンドです。```")
         
         elif message.content == ("/cat"):
             await message.channel.send(f"{message.author.mention},にゃおん(迫真)")
@@ -72,36 +71,39 @@ async def on_message(message):
                 #Point notice 
                 endp = requests.get("https://bonychops.com/experiment/discord-police/api/getGoglerPoint.php") #エンドポイント
                 data = json.loads(endp.text) #data関数にjson内の情報をブチコ
+                dt_now = datetime.datetime.now() #現在時刻を取得
             
                 for member in data["data"].values():
                     await message.channel.send(f'```{member["name"]}は現在{member["point"]}ptです。```')
                     # Point警告機能
                     if int(member["point"]) >= 50000:
-                        embed = discord.Embed(title = "DANGER",description = f"{member['name']}さん、Gogler Pointの値が**異常に高い**です！！\n**限界開発による命の危険があります。**\n**健康的な時間での活動**を行ってください。",color = 0x800080)
+                        embed = discord.Embed(title = "**DANGER**",description = f"{member['name']}さん、Gogler Pointの値が**危険な高さ**です！！\n**限界開発による絶命の危険があります。**\n**即座に限界開発を中止**し、**健康的な時間での活動**を行ってください。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0x800080)
                         embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/711485944213012502/756910465376059422/DANGER.png")
 
                     elif int(member["point"]) >= 10000:
-                        embed = discord.Embed(title = "WARNING",description = "Gogler Pointの値が**かなり**高くなっています。\n**活動を自粛し、命を守ってください。**",color = 0xff0000)
+                        embed = discord.Embed(title = "**WARNING**",description = "Gogler Pointの値が**かなり高く**なっています。\n**限界開発を自粛し、命を守ってください。**\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xff0000)
                         embed.set_thumbnail(url = "https://i.imgur.com/3wSKpGi.png")
 
                     elif int(member["point"]) >= 5000:
-                        embed = discord.Embed(title = "CAUTION",description = "Gogler Pointの値が**高くなりつつあるようです。**\n健康な時間帯でのコミット等でGogler Pointの増加を防止してください。",color = 0xFFFF00)
+                        embed = discord.Embed(title = "**CAUTION**",description = "Gogler Pointの値が**高くなりつつあります。**\n健康な時間帯でのコミット等でGogler Pointの増加を防止してください。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xFFFF00)
                         embed.set_thumbnail(url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/40px-OOjs_UI_icon_alert-yellow.svg.png")
 
                     else:
-                        embed =discord.Embed(title = "NOTICE",description = "Gogler Pointの値は**正常**です。\n健康的な活動を続けましょう。",color = 0x32CD32)
+                        embed =discord.Embed(title = "**NORMAL**",description = "Gogler Pointの値は**正常**です。\n健康的な活動を続けましょう。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0x32CD32)
                         embed.set_thumbnail(url = "https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png")
                     
+                    embed.set_author(name = "Gogler Point Notice",icon_url = "https://pbs.twimg.com/profile_images/1253698378686320642/ndnIvdlN_400x400.jpg")
                     await message.channel.send(embed=embed) # send embed
         
             elif message.content == ("/get day"):
                 await message.channel.send(f"{message.author.mention},(便乗)")
+            
             elif message.content == ("/get list"):
                 await message.channel.send("```/get day:現在の日付および日時をお知らせします。(この機能いるのか？)\n/get point:各DevelperのGogler Pointを表示します。```")
         
             else :
-                await message.channel.send("```Invalid syntax```")
+                await message.channel.send(f"{message.author.mention}\n```Error:Invalid syntax```")
         else :
-            await message.channel.send("```Unknown command```")
+            await message.channel.send(f"{message.author.mention}\n```Error:Unknown command```")
 
 client.run(token)
