@@ -1,2 +1,6 @@
 # TEST_Bot
-**GOMI Bot** works on Discord.
+This is my first discord bot production.
+
+# Caution
+**GOMI code**
+This Bot have meny problems.
