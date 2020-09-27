@@ -41,11 +41,14 @@ async def on_message(message):
         await message.channel.send(":ng:")
     
     elif message.content.find("sexy") != -1:
-            emoji = client.get_emoji(751817150834016297)
-            await message.add_reaction(emoji) # :pornhub:リアクションを追加
+        emoji = client.get_emoji(751817150834016297)
+        await message.add_reaction(emoji) # :pornhub:リアクションを追加
     
     elif message.content == ("/happy"):
-            await message.channel.send(f"{message.author.mention},(便乗)")
+        await message.channel.send(f"{message.author.mention},(便乗)")
+
+    elif message.content == ("/flash"):
+        return
     
     elif message.content.find("/") != -1:
         if (message.author.bot) or (message.content.find("/") >= 2):
@@ -56,7 +59,7 @@ async def on_message(message):
             return
         
         elif message.content == ("/list"):
-            await message.channel.send("```cat:弊鯖内の猫系Botを呼び出すコマンドです。\ndango:特に意味はないです。\nget:様々な値を取得します。\nhappy:使用が推奨されていないコマンドです。```")
+            await message.channel.send("```cat:弊鯖内の猫系Botを呼び出すコマンドです。\ndango:特に意味はないです。\nflash:強力な攻撃で汚れたメッセージ履歴を(見た感じ)一掃します\nget:様々な値を取得します。\nhappy:使用が推奨されていないコマンドです。```")
         
         elif message.content == ("/cat"):
             await message.channel.send(f"{message.author.mention},にゃおん(迫真)")
