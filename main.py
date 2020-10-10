@@ -8,10 +8,10 @@ import json
 import random
 import requests
 
-#with open ("token.txt") as tkn:
-#    token = tkn.read() #トークンを文字列として読み込み
+with open ("token.txt") as tkn:
+    token = tkn.read() #トークンを文字列として読み込み
 
-token = os.environ['DISCORD_BOT_TOKEN'] #Config Barに書き込んだトークン読んでもらう
+#token = os.environ['DISCORD_BOT_TOKEN'] #Config Barに書き込んだトークン読んでもらう
 
 #接続に必要なオブジェクト生成
 client = discord.Client()
@@ -83,25 +83,25 @@ async def on_message(message):
                 dt_now = datetime.datetime.now() #現在時刻を取得
             
                 for member in data["data"].values():
-                    await message.channel.send(f'```{member["name"]}は現在{member["point"]}ptです。```')
                     # Point警告機能
                     if int(member["point"]) >= 50000:
-                        embed = discord.Embed(title = "**DANGER**",description = f"{member['name']}さん、Gogler Pointの値が**危険な高さ**です！！\n**限界開発による絶命の危険があります。**\n**即座に限界開発を中止**し、**健康的な時間での活動**を行ってください。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0x800080)
-                        embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/711485944213012502/756910465376059422/DANGER.png")
+                        embed = discord.Embed(title = "**DANGER**",description = "Gogler Pointが**5万pt超過、非常に危険です！！**\n**即座に開発を中止し命を守る行動を取ってください**。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0x800080)
+                        embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/711485944213012502/764523690964287498/pngwing.com.png")
 
-                    elif int(member["point"]) >= 10000:
-                        embed = discord.Embed(title = "**WARNING**",description = "Gogler Pointの値が**かなり高く**なっています。\n**限界開発を自粛し、命を守ってください。**\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xff0000)
+                    elif int(member["point"]) >= 25000:
+                        embed = discord.Embed(title = "**WARNING**",description = "Gogler Pointの値が**かなり高く**なっています。\n**限界開発を自粛し、健康時間帯での活動をしてください。**\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xff0000)
                         embed.set_thumbnail(url = "https://i.imgur.com/3wSKpGi.png")
 
-                    elif int(member["point"]) >= 5000:
-                        embed = discord.Embed(title = "**CAUTION**",description = "Gogler Pointの値が**高くなりつつあります。**\n健康な時間帯でのコミット等でGogler Pointの増加を防止してください。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xFFFF00)
-                        embed.set_thumbnail(url = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/40px-OOjs_UI_icon_alert-yellow.svg.png")
+                    elif int(member["point"]) >= 10000:
+                        embed = discord.Embed(title = "**CAUTION**",description = "Gogler Pointが少し高いようです。\n健康時間帯でのコミットやタスク終了でGogler Pointを減らすことができます。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0xFFFF00)
+                        embed.set_thumbnail(url = "https://cdn.discordapp.com/attachments/711485944213012502/764526697370222602/pngwing.com_1.png")
 
                     else:
-                        embed =discord.Embed(title = "**NORMAL**",description = "Gogler Pointの値は**正常**です。\n健康的な活動を続けましょう。\n\n" + dt_now.strftime('%Y/%m/%d %H:%M:%S'),color = 0x32CD32)
-                        embed.set_thumbnail(url = "https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png")
+                        pass
                     
                     embed.set_author(name = "Gogler Point Notice",icon_url = "https://pbs.twimg.com/profile_images/1253698378686320642/ndnIvdlN_400x400.jpg")
+                    
+                    await message.channel.send(f'{member["name"]}さんは現在**{member["point"]}pt**です。')
                     await message.channel.send(embed=embed) # send embed
         
             elif message.content == ("/get day"):
